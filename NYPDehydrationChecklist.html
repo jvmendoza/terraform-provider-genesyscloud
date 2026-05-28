@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dehydration Checklist | NewYork-Presbyterian</title>
+  <style>
+    :root {
+      --bg: #f5f8fc;
+      --card: #ffffff;
+      --text: #0b1f3a;
+      --muted: #5e6f84;
+      --primary: #0b1f3a;
+      --primary-dark: #071224;
+      --accent: #eef4fb;
+      --warning: #fff5ea;
+      --warning-border: #f0c36d;
+      --danger: #fff0f1;
+      --danger-border: #c8102e;
+      --shadow: 0 12px 30px rgba(18, 40, 70, 0.10);
+      --radius: 20px;
+      --brand-red: #c8102e;
+      --brand-blue: #1b75bb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #eef4fb 0%, #f9fbfd 100%);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 18px 48px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0b1f3a 0%, #1b75bb 100%);
+      color: white;
+      border-radius: 28px;
+      padding: 34px 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand-mark {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.5px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+
+    .brand-copy .org {
+      font-size: 0.92rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      opacity: 0.92;
+      margin-bottom: 2px;
+    }
+
+    .brand-copy .sub {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+    }
+
+    header p {
+      margin: 0;
+      max-width: 70ch;
+      font-size: 1.05rem;
+      opacity: 0.96;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      border: 1px solid rgba(11, 31, 58, 0.06);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .muted { color: var(--muted); }
+
+    .intro-list, .checklist, .steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .intro-list li,
+    .checklist li,
+    .steps li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-top: 1px solid rgba(11, 31, 58, 0.08);
+    }
+
+    .intro-list li:first-child,
+    .checklist li:first-child,
+    .steps li:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .badge {
+      min-width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--primary-dark);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 1px;
+      flex: 0 0 auto;
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .check-row input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--brand-red);
+      cursor: pointer;
+    }
+
+    .check-row label {
+      cursor: pointer;
+      display: block;
+    }
+
+    .question {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .result-box {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--accent);
+      border: 1px solid rgba(11, 31, 58, 0.14);
+    }
+
+    .result-title {
+      margin: 0 0 6px;
+      font-weight: 700;
+    }
+
+    .progress-wrap {
+      margin-top: 14px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+
+    .progress {
+      width: 100%;
+      height: 14px;
+      background: #e8eef6;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-red) 100%);
+      transition: width 0.25s ease;
+    }
+
+    .hydration-controls {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      border: 1px solid rgba(11, 31, 58, 0.12);
+      background: white;
+      border-radius: 16px;
+      padding: 12px 10px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      border-color: rgba(200, 16, 46, 0.38);
+      box-shadow: 0 8px 18px rgba(200, 16, 46, 0.10);
+    }
+
+    .pill.active {
+      background: var(--brand-red);
+      color: white;
+      border-color: var(--brand-red);
+    }
+
+    .warning {
+      background: var(--warning);
+      border: 1px solid var(--warning-border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .danger {
+      background: var(--danger);
+      border: 1px solid var(--danger-border);
+      border-radius: 18px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .footer {
+      margin-top: 18px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 8px 12px;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .hydration-controls { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 520px) {
+      .wrap { padding-left: 12px; padding-right: 12px; }
+      header { padding: 24px 18px; }
+      .card { padding: 18px; }
+      .hydration-controls { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand-row">
+        <div class="brand-mark" aria-label="NewYork-Presbyterian mark">NYP</div>
+        <div class="brand-copy">
+          <div class="org">NewYork-Presbyterian</div>
+          <div class="sub">Symptom guidance and hydration support</div>
+        </div>
+      </div>
+      <h1>Dehydration Checklist</h1>
+      <p>
+        A simple, easy-to-use checklist for spotting common signs of dehydration, tracking fluids, and knowing when to get medical help.
+      </p>
+    </header>
+
+    <main class="grid" aria-label="Dehydration checklist site">
+      <section class="card" aria-labelledby="symptoms-title">
+        <h2 id="symptoms-title">Check the symptoms</h2>
+        <p class="muted">Select any signs you are noticing right now.</p>
+
+        <ul class="checklist" id="symptom-list">
+          <li>
+            <div class="check-row">
+              <input type="checkbox" id="sym1" />
+              <label for="sym1">
+                <div class="question">Dry mouth or dry lips</div>
+                <div class="muted">Mouth feels sticky, parched, or unusually dry.</div>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="check-row">
+              <input type="checkbox" id="sym2" />
+              <label for="sym2">
+                <div class="question">Dark yellow urine</div>
+                <div class="muted">Urine is darker than usual or you are peeing less often.</div>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="check-row">
+              <input type="checkbox" id="sym3" />
+              <label for="sym3">
+                <div class="question">Headache or dizziness</div>
+                <div class="muted">You feel lightheaded, weak, or unsteady.</div>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="check-row">
+              <input type="checkbox" id="sym4" />
+              <label for="sym4">
+                <div class="question">Fatigue or low energy</div>
+                <div class="muted">You feel more tired than usual or less alert.</div>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="check-row">
+              <input type="checkbox" id="sym5" />
+              <label for="sym5">
+                <div class="question">Thirst</div>
+                <div class="muted">You feel thirsty more often than usual.</div>
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="check-row">
+              <input type="checkbox" id="sym6" />
+              <label for="sym6">
+                <div class="question">Rapid heartbeat or rapid breathing</div>
+                <div class="muted">This can happen when dehydration is more severe.</div>
+              </label>
+            </div>
+          </li>
+        </ul>
+
+        <div class="result-box" aria-live="polite">
+          <p class="result-title" id="result-title">Your checklist status</p>
+          <p class="muted" id="result-text">No symptoms selected yet.</p>
+        </div>
+      </section>
+
+      <aside>
+        <section class="card" aria-labelledby="hydration-title">
+          <h2 id="hydration-title">Hydration tracker</h2>
+          <p class="muted">Tap a button to estimate how much you have had to drink today.</p>
+
+          <div class="hydration-controls" role="group" aria-label="Hydration amount buttons">
+            <button class="pill" data-oz="8">8 oz</button>
+            <button class="pill" data-oz="16">16 oz</button>
+            <button class="pill" data-oz="32">32 oz</button>
+            <button class="pill" data-oz="64">64 oz</button>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-label">
+              <span>Estimated intake</span>
+              <span id="intake-label">0 oz</span>
+            </div>
+            <div class="progress" aria-hidden="true">
+              <div class="bar" id="bar"></div>
+            </div>
+            <p class="muted" style="margin-top:10px;" id="hydration-note">A common goal is around 64 oz per day, but needs vary by person, activity, and weather.</p>
+          </div>
+        </section>
+
+        <section class="warning" aria-labelledby="tips-title">
+          <h2 id="tips-title" style="margin-top:0;">What to do now</h2>
+          <ul class="steps">
+            <li><span class="badge">1</span><span>Drink small sips of water or an oral rehydration drink.</span></li>
+            <li><span class="badge">2</span><span>Rest in a cool place and avoid heavy activity.</span></li>
+            <li><span class="badge">3</span><span>Try fluids with electrolytes if you have been sweating, vomiting, or had diarrhea.</span></li>
+          </ul>
+        </section>
+
+        <section class="danger" aria-labelledby="help-title">
+          <h2 id="help-title" style="margin-top:0;">Get urgent help now if</h2>
+          <ul class="intro-list">
+            <li><span class="badge">!</span><span>Confusion, fainting, or trouble staying awake</span></li>
+            <li><span class="badge">!</span><span>No urine for many hours or very little urine</span></li>
+            <li><span class="badge">!</span><span>Severe vomiting, severe diarrhea, or inability to keep fluids down</span></li>
+            <li><span class="badge">!</span><span>Chest pain, severe weakness, or signs of shock</span></li>
+          </ul>
+        </section>
+      </aside>
+    </main>
+
+    <div class="footer">
+      This page is for general information and is not a diagnosis. For medical concerns, contact a clinician.
+    </div>
+  </div>
+
+  <script>
+    const symptomIds = ["sym1", "sym2", "sym3", "sym4", "sym5", "sym6"];
+    const resultText = document.getElementById("result-text");
+    const resultTitle = document.getElementById("result-title");
+    const buttons = Array.from(document.querySelectorAll(".pill"));
+    const intakeLabel = document.getElementById("intake-label");
+    const bar = document.getElementById("bar");
+
+    function updateChecklist() {
+      const selected = symptomIds.filter(id => document.getElementById(id).checked);
+      const count = selected.length;
+
+      if (count === 0) {
+        resultTitle.textContent = "Your checklist status";
+        resultText.textContent = "No symptoms selected yet.";
+        return;
+      }
+
+      if (count <= 2) {
+        resultTitle.textContent = "Mild signs may be present";
+        resultText.textContent = `You selected ${count} symptom${count > 1 ? "s" : ""}. Try drinking fluids, resting, and checking again later.`;
+      } else if (count <= 4) {
+        resultTitle.textContent = "More signs are showing";
+        resultText.textContent = `You selected ${count} symptoms. Increase fluids now and watch for worsening symptoms or reduced urination.`;
+      } else {
+        resultTitle.textContent = "Possible significant dehydration";
+        resultText.textContent = `You selected ${count} symptoms. Consider medical advice, especially if you feel weak, dizzy, confused, or cannot keep fluids down.`;
+      }
+    }
+
+    symptomIds.forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener("change", updateChecklist);
+    });
+
+    function setHydration(oz) {
+      intakeLabel.textContent = `${oz} oz`;
+      const percent = Math.min((oz / 64) * 100, 100);
+      bar.style.width = `${percent}%`;
+      buttons.forEach(btn => btn.classList.toggle("active", Number(btn.dataset.oz) === oz));
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => setHydration(Number(btn.dataset.oz)));
+    });
+
+    updateChecklist();
+    setHydration(0);
+  </script>
+</body>
+</html>
